@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HOOD STOCKS | $HSTOCKS</title>
+  <meta name="description" content="Hold $HSTOCKS. Earn tokenized stock rewards. Every trade helps fund stock rewards for holders." />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            hood: {
+              green: '#00C805',
+              lime: '#39FF14',
+              glow: '#00FF66',
+              dark: '#050805',
+              panel: '#0a120a',
+              mute: '#8a9a8a',
+              silver: '#d4d8d4',
+            }
+          },
+          fontFamily: {
+            display: ['"Bebas Neue"', 'sans-serif'],
+            body: ['"IBM Plex Sans"', 'sans-serif'],
+          },
+          boxShadow: {
+            'green-glow': '0 0 24px rgba(0, 200, 5, 0.45)',
+            'green-soft': '0 0 40px rgba(0, 200, 5, 0.2)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --hood-green: #00C805;
+      --hood-lime: #39FF14;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "IBM Plex Sans", sans-serif;
+      background: #000;
+      color: #e8efe8;
+      overflow-x: hidden;
+    }
+
+    .font-display { font-family: "Bebas Neue", sans-serif; letter-spacing: 0.04em; }
+
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(0, 200, 5, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 200, 5, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .bg-stock-glow {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0, 200, 5, 0.22), transparent 55%),
+        radial-gradient(ellipse 40% 40% at 90% 20%, rgba(57, 255, 20, 0.08), transparent 50%),
+        radial-gradient(ellipse 35% 35% at 10% 60%, rgba(0, 200, 5, 0.1), transparent 50%),
+        #000;
+    }
+
+    .ticker {
+      animation: ticker 28s linear infinite;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .hero-banner {
+      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #1aff2e 0%, #00C805 45%, #009a04 100%);
+      color: #001a00;
+      box-shadow: 0 0 0 1px rgba(0, 255, 80, 0.35), 0 8px 28px rgba(0, 200, 5, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 0 1px rgba(57, 255, 20, 0.55), 0 12px 36px rgba(0, 200, 5, 0.55);
+      filter: brightness(1.08);
+    }
+
+    .btn-ghost {
+      background: rgba(0, 200, 5, 0.06);
+      border: 1px solid rgba(0, 200, 5, 0.45);
+      color: var(--hood-lime);
+      box-shadow: inset 0 0 20px rgba(0, 200, 5, 0.05);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-2px) scale(1.03);
+      background: rgba(0, 200, 5, 0.14);
+      box-shadow: 0 0 28px rgba(0, 200, 5, 0.35);
+    }
+
+    .step-num {
+      background: linear-gradient(180deg, #1aff2e, #00a804);
+      color: #001400;
+      box-shadow: 0 0 18px rgba(0, 200, 5, 0.4);
+    }
+
+    .ca-box {
+      background: linear-gradient(180deg, rgba(0, 200, 5, 0.08), rgba(0, 0, 0, 0.4));
+      border: 1px solid rgba(0, 200, 5, 0.35);
+    }
+
+    .section-rule {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 200, 5, 0.55), transparent);
+    }
+
+    .chart-frame {
+      border: 1px solid rgba(0, 200, 5, 0.3);
+      box-shadow: 0 0 40px rgba(0, 200, 5, 0.12);
+      background: #0a0f0a;
+    }
+
+    .social-link {
+      transition: transform 0.2s ease, filter 0.2s ease;
+      position: relative;
+    }
+
+    .social-link:hover {
+      transform: scale(1.12);
+      filter: drop-shadow(0 0 12px rgba(0, 200, 5, 0.7));
+    }
+
+    .social-x {
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .float-logo {
+      animation: floatY 4.5s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .fade-up-delay { animation-delay: 0.15s; }
+    .fade-up-delay-2 { animation-delay: 0.3s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .burst-host {
+      position: relative;
+      overflow: visible;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 40;
+      mix-blend-mode: screen;
+      animation: bubblePop var(--dur, 700ms) ease-out forwards;
+    }
+
+    @keyframes bubblePop {
+      0% {
+        opacity: 0.95;
+        transform: translate(0, 0) scale(0.2);
+      }
+      70% { opacity: 0.85; }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(var(--scale, 1));
+      }
+    }
+
+    .pulse-ring {
+      animation: pulseRing 2.8s ease-out infinite;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(1); opacity: 0.55; }
+      100% { transform: scale(1.45); opacity: 0; }
+    }
+
+    .nav-blur {
+      backdrop-filter: blur(14px);
+      background: rgba(0, 0, 0, 0.72);
+      border-bottom: 1px solid rgba(0, 200, 5, 0.2);
+    }
+
+    .copied-toast {
+      animation: toastIn 0.25s ease both, toastOut 0.3s ease 1.4s forwards;
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes toastOut {
+      to { opacity: 0; transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body class="bg-stock-glow bg-grid min-h-screen">
+
+  <!-- Ticker -->
+  <div class="border-b border-hood-green/20 bg-black/80 overflow-hidden py-2 text-xs sm:text-sm text-hood-green font-semibold tracking-wider uppercase">
+    <div class="ticker flex whitespace-nowrap w-max">
+      <span class="px-6">$HSTOCKS · HOOD STOCKS · Hold &amp; Earn Tokenized Stock Rewards · Trade Bold · Invest Smart · Grow Together · Robinhood ETH ·</span>
+      <span class="px-6">$HSTOCKS · HOOD STOCKS · Hold &amp; Earn Tokenized Stock Rewards · Trade Bold · Invest Smart · Grow Together · Robinhood ETH ·</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <header class="nav-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
+      <a href="#top" class="burst-host flex items-center gap-3 group">
+        <img src="logo.png" alt="HOOD STOCKS logo" class="w-11 h-11 sm:w-14 sm:h-14 object-contain drop-shadow-green-glow" />
+        <div class="leading-none">
+          <div class="font-display text-2xl sm:text-3xl tracking-wide">
+            <span class="text-hood-green">HOOD</span><span class="text-hood-silver"> STOCKS</span>
+          </div>
+          <div class="text-[10px] sm:text-xs text-hood-mute tracking-[0.25em] mt-1">$HSTOCKS</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-hood-silver">
+        <a href="#about" class="hover:text-hood-lime transition-colors">About</a>
+        <a href="#howtobuy" class="hover:text-hood-lime transition-colors">How to Buy</a>
+        <a href="#chart" class="hover:text-hood-lime transition-colors">Chart</a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="https://t.me/HOODSTOCKS_portal" target="_blank" rel="noopener noreferrer" class="burst-host social-link rounded-full overflow-hidden w-10 h-10 sm:w-11 sm:h-11" aria-label="Telegram">
+          <img src="tg.png" alt="Telegram" class="w-full h-full object-cover" />
+        </a>
+        <a href="https://x.com/HOODSTOCKS_x" target="_blank" rel="noopener noreferrer" class="burst-host social-link social-x rounded-full overflow-hidden w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center" aria-label="X / Twitter">
+          <img src="x.png" alt="X" class="w-[70%] h-[70%] object-contain" />
+        </a>
+        <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="burst-host btn-primary hidden sm:inline-flex items-center px-4 py-2 rounded-md font-bold text-sm uppercase tracking-wide">
+          Buy Now
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="relative">
+      <div class="hero-banner relative w-full overflow-hidden">
+        <img src="banner.png" alt="HOOD STOCKS banner" class="w-full max-h-[72vh] object-cover object-center opacity-95" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/40"></div>
+      </div>
+
+      <div class="relative max-w-5xl mx-auto px-4 sm:px-6 -mt-20 sm:-mt-28 pb-16 text-center">
+        <div class="fade-up float-logo inline-block relative mb-5">
+          <div class="absolute inset-0 rounded-full border border-hood-green/40 pulse-ring"></div>
+          <img src="logo.png" alt="HOOD STOCKS" class="burst-host relative w-28 h-28 sm:w-36 sm:h-36 mx-auto object-contain drop-shadow-[0_0_30px_rgba(0,200,5,0.55)]" />
+        </div>
+
+        <h1 class="fade-up fade-up-delay font-display text-6xl sm:text-8xl md:text-9xl leading-none">
+          <span class="text-hood-green">HOOD</span>
+          <span class="text-white"> STOCKS</span>
+        </h1>
+        <p class="fade-up fade-up-delay font-display text-hood-lime text-2xl sm:text-3xl tracking-[0.2em] mt-2">$HSTOCKS</p>
+
+        <p class="fade-up fade-up-delay-2 mt-6 max-w-2xl mx-auto text-base sm:text-xl text-hood-silver leading-relaxed">
+          Hold <span class="text-hood-lime font-semibold">$HSTOCKS</span>. Earn tokenized stock rewards.
+          <br class="hidden sm:block" />
+          Every trade helps fund stock rewards for holders.
+        </p>
+
+        <div class="fade-up fade-up-delay-2 mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+          <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="burst-host btn-primary w-full sm:w-auto px-10 py-3.5 rounded-md font-bold text-lg uppercase tracking-wider">
+            Buy Now
+          </a>
+          <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="burst-host btn-ghost w-full sm:w-auto px-10 py-3.5 rounded-md font-bold text-lg uppercase tracking-wider">
+            Chart
+          </a>
+        </div>
+
+        <!-- Contract Address -->
+        <div class="fade-up fade-up-delay-2 mt-8 max-w-xl mx-auto ca-box rounded-lg p-4 sm:p-5">
+          <div class="text-[11px] uppercase tracking-[0.28em] text-hood-green mb-2">Contract Address</div>
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <code id="caValue" class="flex-1 text-sm sm:text-base text-hood-silver break-all font-medium bg-black/50 rounded px-3 py-2.5 border border-hood-green/15">TBA</code>
+            <button id="copyCa" type="button" class="burst-host btn-primary shrink-0 px-5 py-2.5 rounded-md font-bold text-sm uppercase tracking-wide">
+              Copy CA
+            </button>
+          </div>
+          <p id="copyMsg" class="hidden mt-2 text-sm text-hood-lime">Copied to clipboard</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-rule max-w-4xl mx-auto"></div>
+
+    <!-- About / Narrative -->
+    <section id="about" class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+      <p class="text-hood-green text-xs uppercase tracking-[0.35em] mb-3">Stock Narrative</p>
+      <h2 class="font-display text-5xl sm:text-6xl text-white mb-5">TRADE THE HOOD. OWN THE MARKET.</h2>
+      <p class="max-w-2xl mx-auto text-hood-mute text-base sm:text-lg leading-relaxed">
+        $HSTOCKS brings Wall Street energy on-chain. A meme with a mission — every swap fuels the vault that
+        routes tokenized stock rewards back to holders. Bullish candles. Green feathers. Real stock narrative.
+      </p>
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-left sm:text-center">
+        <div>
+          <div class="font-display text-4xl text-hood-green">HOLD</div>
+          <p class="mt-2 text-sm text-hood-mute">Stack $HSTOCKS and stay in the reward loop.</p>
+        </div>
+        <div>
+          <div class="font-display text-4xl text-hood-green">EARN</div>
+          <p class="mt-2 text-sm text-hood-mute">Tokenized stock rewards funded by trading volume.</p>
+        </div>
+        <div>
+          <div class="font-display text-4xl text-hood-green">GROW</div>
+          <p class="mt-2 text-sm text-hood-mute">Community-powered bull run on Robinhood ETH.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-rule max-w-4xl mx-auto"></div>
+
+    <!-- How to Buy -->
+    <section id="howtobuy" class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+      <div class="text-center mb-12">
+        <p class="text-hood-green text-xs uppercase tracking-[0.35em] mb-3">Get In</p>
+        <h2 class="font-display text-5xl sm:text-6xl text-white">HOW TO BUY $HSTOCKS</h2>
+        <p class="mt-3 text-hood-mute">Four steps on Robinhood ETH</p>
+      </div>
+
+      <ol class="space-y-6 sm:space-y-8 max-w-3xl mx-auto">
+        <li class="flex gap-4 sm:gap-6 items-start">
+          <span class="step-num shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-display text-2xl">1</span>
+          <div>
+            <h3 class="font-display text-2xl sm:text-3xl text-white tracking-wide">Create a Wallet</h3>
+            <p class="mt-1 text-hood-mute leading-relaxed">
+              Download MetaMask or another EVM wallet. Set up a new wallet and secure your seed phrase.
+            </p>
+          </div>
+        </li>
+        <li class="flex gap-4 sm:gap-6 items-start">
+          <span class="step-num shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-display text-2xl">2</span>
+          <div>
+            <h3 class="font-display text-2xl sm:text-3xl text-white tracking-wide">Get Robinhood ETH</h3>
+            <p class="mt-1 text-hood-mute leading-relaxed">
+              Bridge or buy ETH on the Robinhood chain. You’ll need ETH for gas and to swap into $HSTOCKS.
+            </p>
+          </div>
+        </li>
+        <li class="flex gap-4 sm:gap-6 items-start">
+          <span class="step-num shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-display text-2xl">3</span>
+          <div>
+            <h3 class="font-display text-2xl sm:text-3xl text-white tracking-wide">Open Uniswap</h3>
+            <p class="mt-1 text-hood-mute leading-relaxed">
+              Go to Uniswap, connect your wallet, and select the Robinhood network. Paste the $HSTOCKS contract address when live.
+            </p>
+          </div>
+        </li>
+        <li class="flex gap-4 sm:gap-6 items-start">
+          <span class="step-num shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-display text-2xl">4</span>
+          <div>
+            <h3 class="font-display text-2xl sm:text-3xl text-white tracking-wide">Swap for $HSTOCKS</h3>
+            <p class="mt-1 text-hood-mute leading-relaxed">
+              Swap your Robinhood ETH for $HSTOCKS. Confirm the trade, then hold to earn tokenized stock rewards.
+            </p>
+            <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="burst-host btn-primary inline-flex mt-4 px-6 py-2.5 rounded-md font-bold text-sm uppercase tracking-wide">
+              Buy $HSTOCKS
+            </a>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <div class="section-rule max-w-4xl mx-auto"></div>
+
+    <!-- Chart Embed -->
+    <section id="chart" class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+      <div class="text-center mb-10">
+        <p class="text-hood-green text-xs uppercase tracking-[0.35em] mb-3">Live Market</p>
+        <h2 class="font-display text-5xl sm:text-6xl text-white">CHART</h2>
+        <p class="mt-3 text-hood-mute">Dexscreener · Robinhood</p>
+      </div>
+
+      <div class="chart-frame rounded-lg overflow-hidden aspect-[16/11] sm:aspect-[16/9]">
+        <iframe
+          id="dexFrame"
+          title="HOOD STOCKS Dexscreener Chart"
+          class="w-full h-full"
+          src="https://dexscreener.com/robinhood/TBA?embed=1&theme=dark&trades=0&info=0"
+          allow="clipboard-write"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <div class="mt-6 flex justify-center">
+        <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="burst-host btn-ghost px-8 py-3 rounded-md font-bold uppercase tracking-wider text-sm">
+          Open Full Chart
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA band -->
+    <section class="relative border-y border-hood-green/25 py-14 sm:py-16 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-hood-green/10 via-transparent to-hood-green/10 pointer-events-none"></div>
+      <div class="relative max-w-4xl mx-auto px-4 text-center">
+        <h2 class="font-display text-4xl sm:text-6xl text-white mb-3">READY TO GO LONG?</h2>
+        <p class="text-hood-silver mb-7 max-w-xl mx-auto">
+          Hold $HSTOCKS. Earn tokenized stock rewards. Every trade helps fund stock rewards for holders.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+          <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="burst-host btn-primary px-10 py-3.5 rounded-md font-bold uppercase tracking-wider">
+            Buy Now
+          </a>
+          <a href="https://t.me/HOODSTOCKS_portal" target="_blank" rel="noopener noreferrer" class="burst-host btn-ghost px-10 py-3.5 rounded-md font-bold uppercase tracking-wider">
+            Join Telegram
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-10 px-4">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="" class="w-10 h-10 object-contain" />
+        <div>
+          <div class="font-display text-xl"><span class="text-hood-green">HOOD</span> <span class="text-white">STOCKS</span></div>
+          <div class="text-xs text-hood-mute tracking-widest">$HSTOCKS</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="https://t.me/HOODSTOCKS_portal" target="_blank" rel="noopener noreferrer" class="burst-host social-link rounded-full overflow-hidden w-10 h-10" aria-label="Telegram">
+          <img src="tg.png" alt="Telegram" class="w-full h-full object-cover" />
+        </a>
+        <a href="https://x.com/HOODSTOCKS_x" target="_blank" rel="noopener noreferrer" class="burst-host social-link social-x rounded-full overflow-hidden w-10 h-10 flex items-center justify-center" aria-label="X">
+          <img src="x.png" alt="X" class="w-[70%] h-[70%] object-contain" />
+        </a>
+      </div>
+      <p class="text-xs text-hood-mute text-center sm:text-right max-w-xs">
+        $HSTOCKS is a meme token. Not financial advice. DYOR.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const CA = 'TBA';
+      const greens = ['#00C805', '#39FF14', '#00FF66', '#7CFF6B', '#B8FF4A', '#FFFFFF'];
+
+      function spawnBubbles(el, count) {
+        const rect = el.getBoundingClientRect();
+        const host = el.classList.contains('burst-host') ? el : el.closest('.burst-host') || el;
+        const originX = rect.width / 2;
+        const originY = rect.height / 2;
+
+        for (let i = 0; i < count; i++) {
+          const bubble = document.createElement('span');
+          bubble.className = 'bubble';
+          const size = 6 + Math.random() * 16;
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 40 + Math.random() * 90;
+          const tx = Math.cos(angle) * dist;
+          const ty = Math.sin(angle) * dist - 20;
+          const color = greens[Math.floor(Math.random() * greens.length)];
+
+          bubble.style.width = size + 'px';
+          bubble.style.height = size + 'px';
+          bubble.style.left = originX - size / 2 + 'px';
+          bubble.style.top = originY - size / 2 + 'px';
+          bubble.style.background = color;
+          bubble.style.boxShadow = `0 0 ${8 + Math.random() * 12}px ${color}`;
+          bubble.style.setProperty('--tx', tx + 'px');
+          bubble.style.setProperty('--ty', ty + 'px');
+          bubble.style.setProperty('--scale', (0.4 + Math.random() * 1.2).toFixed(2));
+          bubble.style.setProperty('--dur', 550 + Math.random() * 450 + 'ms');
+
+          host.appendChild(bubble);
+          setTimeout(() => bubble.remove(), 1100);
+        }
+      }
+
+      document.querySelectorAll('.burst-host').forEach((el) => {
+        let cool = false;
+        el.addEventListener('mouseenter', () => {
+          if (cool) return;
+          cool = true;
+          spawnBubbles(el, 14 + Math.floor(Math.random() * 8));
+          setTimeout(() => { cool = false; }, 280);
+        });
+      });
+
+      const copyBtn = document.getElementById('copyCa');
+      const copyMsg = document.getElementById('copyMsg');
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(CA);
+        } catch {
+          const ta = document.createElement('textarea');
+          ta.value = CA;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+        }
+        copyMsg.classList.remove('hidden');
+        copyMsg.classList.add('copied-toast');
+        setTimeout(() => {
+          copyMsg.classList.add('hidden');
+          copyMsg.classList.remove('copied-toast');
+        }, 1700);
+      });
+    })();
+  </script>
+</body>
+</html>
